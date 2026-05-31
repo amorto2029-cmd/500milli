@@ -19,49 +19,73 @@
   --border-radius-lg:14px;
   --border-radius-md:10px;
 }
-body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);}
+body.dark{
+  --color-background-primary:#141414;
+  --color-background-secondary:#1e1e1e;
+  --color-border-primary:#444444;
+  --color-border-secondary:#333333;
+  --color-border-tertiary:#2a2a2a;
+  --color-text-primary:#f0f0f0;
+  --color-text-secondary:#9a9a9a;
+  --color-text-tertiary:#5e5e5e;
+}
+body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);transition:background .2s,color .2s;}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 *{box-sizing:border-box;margin:0;padding:0}
-.app{padding:1.5rem 1rem;font-family:var(--font-sans);max-width:760px;margin:0 auto}
-.nav{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:4px}
-.nav-btn{flex:1;padding:7px 0;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:calc(var(--border-radius-md) - 2px);color:var(--color-text-secondary);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
+.app{padding:1.25rem 1rem 3rem;font-family:var(--font-sans);max-width:760px;margin:0 auto}
+
+/* top bar */
+.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:10px}
+.app-title{font-size:18px;font-weight:600;color:var(--color-text-primary)}
+.top-right{display:flex;align-items:center;gap:8px}
+.dark-toggle{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);font-size:12px;font-weight:500;font-family:var(--font-sans);cursor:pointer;transition:all .15s}
+.dark-toggle:hover{color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.dark-toggle i{font-size:14px}
+
+.nav{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:4px;flex-wrap:wrap}
+.nav-btn{flex:1;min-width:60px;padding:7px 4px;font-size:12px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:calc(var(--border-radius-md) - 2px);color:var(--color-text-secondary);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:var(--font-sans)}
 .nav-btn.active{background:var(--color-background-primary);color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary)}
-.nav-btn i{font-size:15px}
+.nav-btn i{font-size:14px}
 .panel{display:none}
 .panel.active{display:block}
+
 .sync-bar{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 10px;margin-bottom:1.25rem}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:#639922;flex-shrink:0}
 .sync-dot.syncing{background:#BA7517;animation:pulse 1s infinite}
 .sync-dot.error{background:#E24B4A}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
 .sh{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem}
 .progress-bar{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem;overflow:hidden}
 .progress-fill{height:100%;border-radius:2px;transition:width .3s}
 .pf-green{background:#1D9E75}
 .pf-amber{background:#BA7517}
+.pf-blue{background:#2E6FD8}
 .gap{height:8px}
 
 .tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
-.tab{padding:5px 11px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
+.tab{padding:5px 11px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s;font-family:var(--font-sans)}
 .tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
 .tab.today-tab{border-color:#1D9E75;color:#085041;background:#E1F5EE}
 .tab.today-tab.active{background:#9FE1CB;color:#04342C;border-color:#0F6E56}
+body.dark .tab.today-tab{color:#9FE1CB;background:#04342C}
+body.dark .tab.today-tab.active{background:#085041;color:#E1F5EE}
 
 .day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .day-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
 .day-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
 
-.todo-add{display:flex;gap:8px;margin-bottom:14px}
+.todo-add{display:flex;gap:8px;margin-bottom:10px}
 .todo-input{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 11px;font-size:13px;font-family:var(--font-sans);outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
 .todo-input:focus{border-color:var(--color-border-primary)}
-.todo-add-btn,.todo-icon-btn{border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
-.todo-add-btn{padding:0 12px;font-size:13px;font-weight:500}
+.todo-add-btn,.todo-icon-btn{border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);transition:all .15s;font-family:var(--font-sans)}
+.todo-add-btn{padding:0 14px;font-size:13px;font-weight:500;height:38px}
 .todo-icon-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .todo-icon-btn:hover,.todo-add-btn:hover{color:var(--color-text-primary);border-color:var(--color-border-primary);background:var(--color-background-primary)}
 .todo-actions{display:flex;gap:5px;margin-left:auto}
 .todo-edit-input{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 9px;font-size:14px;font-family:var(--font-sans);outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
 .todo-empty{font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px}
-.todo-hint{font-size:11px;color:var(--color-text-tertiary);margin-top:-6px;margin-bottom:12px}
+.todo-hint{font-size:11px;color:var(--color-text-tertiary);margin-bottom:12px}
 
 .sch-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--border-radius-md);margin-bottom:4px;cursor:pointer;transition:opacity .2s}
 .sch-item.done-item{opacity:.45}
@@ -72,7 +96,7 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .sch-label{flex:1;font-size:14px;font-weight:500}
 .sch-item.done-item .sch-label{text-decoration:line-through}
 .sch-dur{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap;margin-left:auto}
-.reset-btn{margin-top:1rem;font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:none;border:none;padding:0}
+.reset-btn{margin-top:1rem;font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:none;border:none;padding:0;font-family:var(--font-sans);display:flex;align-items:center;gap:4px}
 .reset-btn:hover{color:var(--color-text-primary)}
 
 .ex-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
@@ -99,55 +123,122 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .total-row{border-radius:var(--border-radius-md);padding:10px 14px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);margin-top:8px}
 .total-top{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--color-text-primary)}
 .total-macro{font-size:11px;color:var(--color-text-secondary);padding-left:26px;margin-top:3px}
+
+/* ── Studies ── */
+.studies-tabs{display:flex;gap:5px;margin-bottom:1.25rem}
+.studies-tab{padding:6px 16px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s;font-family:var(--font-sans)}
+.studies-tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
+
+.chapter-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:8px}
+.chapter-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.chapter-name{font-size:14px;font-weight:500;color:var(--color-text-primary);flex:1}
+.chapter-done-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#E1F5EE;color:#085041;white-space:nowrap}
+body.dark .chapter-done-badge{background:#04342C;color:#9FE1CB}
+.chapter-done-badge.in-progress{background:#FFF3DC;color:#7A4D00}
+body.dark .chapter-done-badge.in-progress{background:#3D2800;color:#FAC775}
+.chapter-done-badge.not-started{background:var(--color-background-primary);color:var(--color-text-tertiary);border:0.5px solid var(--color-border-tertiary)}
+
+.chapter-stats{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.stat-field{display:flex;align-items:center;gap:5px}
+.stat-label{font-size:11px;color:var(--color-text-tertiary);white-space:nowrap}
+.stat-input{width:52px;border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:4px 7px;font-size:13px;font-weight:500;font-family:var(--font-sans);background:var(--color-background-primary);color:var(--color-text-primary);outline:none;text-align:center;transition:border-color .15s}
+.stat-input:focus{border-color:var(--color-border-primary)}
+.stat-computed{font-size:13px;font-weight:500;color:var(--color-text-secondary);min-width:28px;text-align:center}
+.stat-divider{font-size:11px;color:var(--color-border-primary);margin:0 2px}
+
+.chapter-prog-wrap{height:3px;background:var(--color-border-tertiary);border-radius:2px;margin-top:8px;overflow:hidden}
+.chapter-prog-fill{height:100%;border-radius:2px;transition:width .3s;background:#1D9E75}
+
+.chapter-actions{display:flex;gap:6px;margin-left:auto;align-items:center}
+.ch-icon-btn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);border-radius:6px;cursor:pointer;color:var(--color-text-tertiary);transition:all .15s;font-size:13px;flex-shrink:0}
+.ch-icon-btn:hover{color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.ch-icon-btn.del:hover{color:#E24B4A;border-color:#E24B4A}
+
+.add-chapter-row{display:flex;gap:8px;margin-top:10px;margin-bottom:4px}
+.add-chapter-input{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 11px;font-size:13px;font-family:var(--font-sans);outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
+.add-chapter-input:focus{border-color:var(--color-border-primary)}
+.add-chapter-btn{padding:0 14px;height:36px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);font-size:13px;font-weight:500;font-family:var(--font-sans);transition:all .15s;white-space:nowrap}
+.add-chapter-btn:hover{color:var(--color-text-primary);border-color:var(--color-border-primary);background:var(--color-background-primary)}
+
+.studies-summary{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:14px;margin-top:18px}
+.studies-summary-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:12px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.summary-stat{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px}
+.summary-stat-val{font-size:20px;font-weight:600;color:var(--color-text-primary)}
+.summary-stat-lbl{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+.summary-pct{color:#1D9E75}
+
+.overall-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:14px;margin-top:10px}
+.overall-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:10px}
+.overall-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.overall-stat{text-align:center;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 4px}
+.overall-val{font-size:16px;font-weight:600;color:var(--color-text-primary)}
+.overall-lbl{font-size:10px;color:var(--color-text-tertiary);margin-top:2px}
+.overall-prog{height:3px;background:var(--color-border-tertiary);border-radius:2px;margin-top:10px;overflow:hidden}
+.overall-prog-fill{height:100%;background:#2E6FD8;border-radius:2px;transition:width .3s}
+
+.ch-name-edit{flex:1;border:0.5px solid var(--color-border-primary);border-radius:6px;padding:4px 8px;font-size:14px;font-weight:500;font-family:var(--font-sans);outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
 </style>
 </head>
 <body>
 
 <div class="app">
-  <h2 class="sr-only">Daily planner with editable todo list, schedule, workout, and meals — all synced</h2>
+  <h2 class="sr-only">Daily planner with studies, todo, schedule, workout, and meals — synced</h2>
 
-  <div class="sync-bar">
-    <span class="sync-dot" id="syncDot"></span>
-    <span id="syncMsg">Connecting...</span>
+  <div class="top-bar">
+    <span class="app-title">500</span>
+    <div class="top-right">
+      <div class="sync-bar" style="margin-bottom:0">
+        <span class="sync-dot" id="syncDot"></span>
+        <span id="syncMsg">Connecting...</span>
+      </div>
+      <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">
+        <i class="ti ti-moon" id="darkIcon"></i>
+        <span id="darkLabel">Dark</span>
+      </button>
+    </div>
   </div>
 
   <div class="nav" role="tablist">
-    <button class="nav-btn active" onclick="showPanel('todolist',this)" role="tab"><i class="ti ti-list-check" aria-hidden="true"></i> To Do</button>
-    <button class="nav-btn" onclick="showPanel('schedule',this)" role="tab"><i class="ti ti-clock" aria-hidden="true"></i> Schedule</button>
-    <button class="nav-btn" onclick="showPanel('workout',this)" role="tab"><i class="ti ti-barbell" aria-hidden="true"></i> Workout</button>
-    <button class="nav-btn" onclick="showPanel('meals',this)" role="tab"><i class="ti ti-bowl" aria-hidden="true"></i> Meals</button>
+    <button class="nav-btn active" onclick="showPanel('todolist',this)" role="tab"><i class="ti ti-list-check"></i> To Do</button>
+    <button class="nav-btn" onclick="showPanel('studies',this)" role="tab"><i class="ti ti-book"></i> Studies</button>
+    <button class="nav-btn" onclick="showPanel('schedule',this)" role="tab"><i class="ti ti-clock"></i> Schedule</button>
+    <button class="nav-btn" onclick="showPanel('workout',this)" role="tab"><i class="ti ti-barbell"></i> Workout</button>
+    <button class="nav-btn" onclick="showPanel('meals',this)" role="tab"><i class="ti ti-bowl"></i> Meals</button>
   </div>
 
+  <!-- TO DO -->
   <div id="panel-todolist" class="panel active">
     <div class="tabs" id="todo-tabs"></div>
-
     <div class="day-header">
       <span class="day-title" id="todo-title">Daily</span>
       <span class="day-badge" id="todo-badge">0 tasks</span>
     </div>
-
-    <div class="progress-bar">
-      <div class="progress-fill pf-green" id="todo-progress" style="width:0%"></div>
-    </div>
-
+    <div class="progress-bar"><div class="progress-fill pf-green" id="todo-progress" style="width:0%"></div></div>
     <div class="todo-add">
       <input class="todo-input" id="todo-input" placeholder="Add new task...">
       <button class="todo-add-btn" onclick="addTodoTask()">Add</button>
     </div>
-    <div class="todo-hint">Click the checkbox to complete. Use the pencil to edit or trash to delete.</div>
-
+    <div class="todo-hint">Tap checkbox to complete · pencil to edit · trash to delete</div>
     <div id="todo-content"></div>
-
-    <button class="reset-btn" onclick="resetSection('todo')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset category</button>
+    <button class="reset-btn" onclick="resetSection('todo')"><i class="ti ti-refresh"></i> Reset category</button>
   </div>
 
+  <!-- STUDIES -->
+  <div id="panel-studies" class="panel">
+    <div class="studies-tabs" id="studies-tabs"></div>
+    <div id="studies-content"></div>
+  </div>
+
+  <!-- SCHEDULE -->
   <div id="panel-schedule" class="panel">
     <div class="sh">Daily schedule</div>
     <div class="progress-bar"><div class="progress-fill pf-amber" id="sch-progress" style="width:0%"></div></div>
     <div id="sch-list"></div>
-    <button class="reset-btn" onclick="resetSection('schedule')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+    <button class="reset-btn" onclick="resetSection('schedule')"><i class="ti ti-refresh"></i> Reset</button>
   </div>
 
+  <!-- WORKOUT -->
   <div id="panel-workout" class="panel">
     <div class="tabs" id="wo-tabs"></div>
     <div class="day-header">
@@ -156,14 +247,15 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
     </div>
     <div class="progress-bar"><div class="progress-fill pf-green" id="wo-progress" style="width:0%"></div></div>
     <div id="wo-list"></div>
-    <button class="reset-btn" onclick="resetSection('workout')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset day</button>
+    <button class="reset-btn" onclick="resetSection('workout')"><i class="ti ti-refresh"></i> Reset day</button>
   </div>
 
+  <!-- MEALS -->
   <div id="panel-meals" class="panel">
     <div class="sh">Daily meal plan</div>
     <div class="progress-bar"><div class="progress-fill pf-green" id="meal-progress" style="width:0%"></div></div>
     <div id="meal-list"></div>
-    <button class="reset-btn" onclick="resetSection('meals')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+    <button class="reset-btn" onclick="resetSection('meals')"><i class="ti ti-refresh"></i> Reset</button>
   </div>
 </div>
 
@@ -183,72 +275,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ─── DEFAULT DATA ────────────────────────────────────────────
+
 const defaultTodoData = {
-  Daily: [
-    "Upload 10 reels on cp",
-    "Upload 10 reels on yzy"
+  Daily:["Upload 10 reels on cp","Upload 10 reels on yzy"],
+  Quick:["Clean phone (hardware + software)","Clean wardrobe","Cut nails","Get Meta money back"],
+  Fixing:["Make timetable to fix studies + backlog","Update CPU drivers","Update graphics drivers","Calculate electric components","Calculate net size","Deep clean PC","Fix audio driver","Make program to automate naming"],
+  Buy:["Buy T-shirts","Buy weighing machine","Buy stand","Buy belts","Buy Converse","Buy fan","Buy jeans","Buy lights","Buy mirror","Buy net","Buy pipe","Buy slides"],
+  Medium:["Walk all the way to cc (maybe)","List editors + pages willing to work with you"],
+  Learning:["Research Apple MacBooks and iPhones","Research how Polymarket & Kalshi prevent insider trading","Learn Claude Code","Learn editing in Premiere Pro / DaVinci Resolve properly"],
+  Installing:["Portal (install / learn)","Serum 2 banks","Zenology (install / learn)","FL Studio (set up / practice)","Get more drumkits"],
+  "Long Term":["Maybe learn French","Open up a new page","Research exams and colleges","Take programming seriously (plan + routine)","Crypto (learn + plan)","Decorate room plan (posters + layout)","Freelancing (setup + first outreach)"]
+};
+const todoCategories = ["Daily","Quick","Fixing","Buy","Medium","Learning","Installing","Long Term"];
+
+// Default studies data — chapters are objects: {id, name, total, completed}
+const defaultStudiesData = {
+  Physics: [
+    {id:'ph0', name:'Ch 0 Basics',         total:5,  completed:5},
+    {id:'ph1', name:'Ch 1 Electric Charges',total:13, completed:13},
+    {id:'ph2', name:'Ch 2 Potential',       total:6,  completed:0}
   ],
-  Quick: [
-    "Clean phone (hardware + software)",
-    "Clean wardrobe",
-    "Cut nails",
-    "Get Meta money back"
+  Chemistry: [
+    {id:'ch0', name:'Ch 0 Basics',                          total:4,  completed:4},
+    {id:'ch1', name:'Ch 1 Solutions',                       total:10, completed:8},
+    {id:'ch2', name:'Special Lecture Numericals of Solution',total:2, completed:0},
+    {id:'ch3', name:'Ch 2 Electro Chemistry',               total:6,  completed:0}
   ],
-  Fixing: [
-    "Make timetable to fix studies + backlog",
-    "Update CPU drivers",
-    "Update graphics drivers",
-    "Calculate electric components",
-    "Calculate net size",
-    "Deep clean PC",
-    "Fix audio driver",
-    "Make program to automate naming"
-  ],
-  Buy: [
-    "Buy T-shirts",
-    "Buy weighing machine",
-    "Buy stand",
-    "Buy belts",
-    "Buy Converse",
-    "Buy fan",
-    "Buy jeans",
-    "Buy lights",
-    "Buy mirror",
-    "Buy net",
-    "Buy pipe",
-    "Buy slides"
-  ],
-  Medium: [
-    "Walk all the way to cc (maybe)",
-    "List editors + pages willing to work with you"
-  ],
-  Learning: [
-    "Research Apple MacBooks and iPhones",
-    "Research how Polymarket & Kalshi prevent insider trading",
-    "Learn Claude Code",
-    "Learn editing in Premiere Pro / DaVinci Resolve properly"
-  ],
-  Installing: [
-    "Portal (install / learn)",
-    "Serum 2 banks",
-    "Zenology (install / learn)",
-    "FL Studio (set up / practice)",
-    "Get more drumkits"
-  ],
-  "Long Term": [
-    "Maybe learn French",
-    "Open up a new page",
-    "Research exams and colleges",
-    "Take programming seriously (plan + routine)",
-    "Crypto (learn + plan)",
-    "Decorate room plan (posters + layout)",
-    "Freelancing (setup + first outreach)"
+  'JEE/NEET': [
+    {id:'jn0', name:'Ch 1 Electric Charges', total:4, completed:0}
   ]
 };
-
-const todoCategories = ["Daily","Quick","Fixing","Buy","Medium","Learning","Installing","Long Term"];
-let activeTodoTab = "Daily";
-let editingTodoIndex = null;
+const studiesSubjects = ['Physics','Chemistry','JEE/NEET'];
 
 const scheduleItems = [
   {id:'s0',time:'8:00 AM',label:'Wake up · brush · face wash · clean bed',dur:'30m',bg:'#E1F5EE',color:'#085041',durBg:'#9FE1CB'},
@@ -285,267 +343,374 @@ const jsDay = new Date().getDay();
 const todayKey = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][jsDay];
 let activeDay = todayKey;
 
-let state = { todo:{ tasks:{}, done:{} }, schedule:{}, workout:{}, meals:{} };
+let state = {
+  todo:{ tasks:{}, done:{} },
+  studies:{},
+  schedule:{},
+  workout:{},
+  meals:{},
+  darkMode: false
+};
 let saveTimer = null;
+let activeTodoTab = "Daily";
+let editingTodoIndex = null;
+let activeStudiesSubject = 'Physics';
+let editingChapterId = null;
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
+function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+
+// ─── DARK MODE ────────────────────────────────────────────────
+function applyDarkMode(on){
+  document.body.classList.toggle('dark', on);
+  const icon = document.getElementById('darkIcon');
+  const lbl  = document.getElementById('darkLabel');
+  if(on){ icon.className='ti ti-sun'; lbl.textContent='Light'; }
+  else  { icon.className='ti ti-moon'; lbl.textContent='Dark'; }
 }
+window.toggleDark = function(){
+  state.darkMode = !state.darkMode;
+  applyDarkMode(state.darkMode);
+  scheduleSave();
+};
 
-function migrateTodoState() {
-  if (!state.todo || Array.isArray(state.todo) || !state.todo.tasks) {
-    const oldDone = state.todo && !state.todo.tasks ? state.todo : {};
-    state.todo = { tasks: clone(defaultTodoData), done: {} };
-
-    todoCategories.forEach(cat => {
-      state.todo.done[cat] = {};
-      const oldCatDone = oldDone?.[cat] || {};
-      Object.keys(oldCatDone).forEach(i => {
-        if (oldCatDone[i]) state.todo.done[cat][i] = true;
-      });
-    });
-  }
-
-  if (!state.todo.tasks) state.todo.tasks = clone(defaultTodoData);
-  if (!state.todo.done) state.todo.done = {};
-
-  todoCategories.forEach(cat => {
-    if (!state.todo.tasks[cat]) state.todo.tasks[cat] = clone(defaultTodoData[cat] || []);
-    if (!state.todo.done[cat]) state.todo.done[cat] = {};
-  });
-}
-
-function setSyncStatus(s, msg) {
+// ─── SYNC ────────────────────────────────────────────────────
+function setSyncStatus(s, msg){
   const dot = document.getElementById('syncDot');
-  dot.className = 'sync-dot' + (s==='syncing'?' syncing':s==='error'?' error':'');
+  dot.className = 'sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');
   document.getElementById('syncMsg').textContent = msg;
 }
 
-async function loadState() {
+async function loadState(){
   setSyncStatus('syncing','Loading...');
-  try {
-    const snap = await getDoc(doc(db, "planner", "planner_v1"));
-    if (snap.exists()) {
-      state = snap.data().state || { todo:{ tasks:{}, done:{} }, schedule:{}, workout:{}, meals:{} };
+  try{
+    const snap = await getDoc(doc(db,"planner","planner_v1"));
+    if(snap.exists()){
+      state = snap.data().state || state;
     }
-
-    if (!state.schedule) state.schedule = {};
-    if (!state.workout) state.workout = {};
-    if (!state.meals) state.meals = {};
+    if(!state.schedule) state.schedule={};
+    if(!state.workout)  state.workout={};
+    if(!state.meals)    state.meals={};
+    if(state.darkMode===undefined) state.darkMode=false;
     migrateTodoState();
-
+    migrateStudiesState();
+    applyDarkMode(state.darkMode);
     setSyncStatus('ok','Synced — open on any device to sync');
-  } catch(e) {
+  }catch(e){
     console.error(e);
     migrateTodoState();
+    migrateStudiesState();
     setSyncStatus('error','Load failed — check Firestore rules');
   }
   renderAll();
 }
 
-async function saveState() {
+async function saveState(){
   setSyncStatus('syncing','Saving...');
-  try {
-    await setDoc(doc(db, "planner", "planner_v1"), {
-      state: state,
-      updatedAt: new Date().toISOString()
-    });
+  try{
+    await setDoc(doc(db,"planner","planner_v1"),{ state, updatedAt: new Date().toISOString() });
     const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    setSyncStatus('ok','Saved at ' + t);
-  } catch(e) {
+    setSyncStatus('ok','Saved at '+t);
+  }catch(e){
     console.error(e);
     setSyncStatus('error','Save failed — check Firestore rules');
   }
 }
+function scheduleSave(){ clearTimeout(saveTimer); saveTimer=setTimeout(saveState,700); }
 
-function scheduleSave() {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveState, 700);
+// ─── MIGRATION HELPERS ───────────────────────────────────────
+function migrateTodoState(){
+  if(!state.todo||Array.isArray(state.todo)||!state.todo.tasks){
+    const oldDone = state.todo&&!state.todo.tasks?state.todo:{};
+    state.todo={ tasks:clone(defaultTodoData), done:{} };
+    todoCategories.forEach(cat=>{
+      state.todo.done[cat]={};
+      const old=oldDone?.[cat]||{};
+      Object.keys(old).forEach(i=>{ if(old[i]) state.todo.done[cat][i]=true; });
+    });
+  }
+  if(!state.todo.tasks) state.todo.tasks=clone(defaultTodoData);
+  if(!state.todo.done)  state.todo.done={};
+  todoCategories.forEach(cat=>{
+    if(!state.todo.tasks[cat]) state.todo.tasks[cat]=clone(defaultTodoData[cat]||[]);
+    if(!state.todo.done[cat])  state.todo.done[cat]={};
+  });
 }
 
-function showPanel(id, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
+function migrateStudiesState(){
+  if(!state.studies) state.studies={};
+  studiesSubjects.forEach(sub=>{
+    if(!state.studies[sub]||!state.studies[sub].length){
+      state.studies[sub]=clone(defaultStudiesData[sub]);
+    }
+  });
+}
+
+// ─── PANEL ───────────────────────────────────────────────────
+window.showPanel = function(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
   btn.classList.add('active');
+};
+
+// ─── TODO ────────────────────────────────────────────────────
+function renderTodoTabs(){
+  const tabs=document.getElementById('todo-tabs');
+  tabs.innerHTML='';
+  todoCategories.forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.className='tab'+(activeTodoTab===cat?' active':'');
+    btn.textContent=cat;
+    btn.onclick=()=>setTodoTab(cat);
+    tabs.appendChild(btn);
+  });
 }
+function renderTodo(){
+  migrateTodoState();
+  renderTodoTabs();
+  const container=document.getElementById('todo-content');
+  const tasks=state.todo.tasks[activeTodoTab]||[];
+  const checked=state.todo.done[activeTodoTab]||{};
+  const done=tasks.filter((_,i)=>checked[i]).length;
+  const pct=tasks.length?Math.round((done/tasks.length)*100):0;
+  document.getElementById('todo-title').textContent=activeTodoTab;
+  document.getElementById('todo-badge').textContent=tasks.length+(tasks.length===1?' task':' tasks');
+  document.getElementById('todo-progress').style.width=pct+'%';
+  container.innerHTML='';
+  if(!tasks.length){ container.innerHTML='<div class="todo-empty">No tasks in this category yet.</div>'; return; }
+  tasks.forEach((task,i)=>{
+    const isDone=!!checked[i];
+    const isEditing=editingTodoIndex===i;
+    const row=document.createElement('div');
+    row.className='ex-row';
+    if(isEditing){
+      row.innerHTML=`<input class="todo-edit-input" id="todo-edit-${i}" value="${escapeAttr(task)}">
+        <div class="todo-actions">
+          <button class="todo-icon-btn" onclick="saveTodoEdit(${i});event.stopPropagation()"><i class="ti ti-check"></i></button>
+          <button class="todo-icon-btn" onclick="cancelTodoEdit();event.stopPropagation()"><i class="ti ti-x"></i></button>
+        </div>`;
+      row.onclick=e=>e.stopPropagation();
+      container.appendChild(row);
+      setTimeout(()=>{
+        const inp=document.getElementById(`todo-edit-${i}`);
+        if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length,inp.value.length);
+          inp.onkeydown=e=>{ if(e.key==='Enter')saveTodoEdit(i); if(e.key==='Escape')cancelTodoEdit(); };
+        }
+      },0);
+      return;
+    }
+    row.innerHTML=`<div class="ex-check ${isDone?'done':''}" onclick="toggleTodo(${i});event.stopPropagation()">${isDone?'<i class="ti ti-check"></i>':''}</div>
+      <span class="ex-name ${isDone?'done':''}">${escapeHtml(task)}</span>
+      <div class="todo-actions">
+        <button class="todo-icon-btn" onclick="startTodoEdit(${i});event.stopPropagation()" title="Edit"><i class="ti ti-pencil"></i></button>
+        <button class="todo-icon-btn" onclick="deleteTodoTask(${i});event.stopPropagation()" title="Delete"><i class="ti ti-trash"></i></button>
+      </div>`;
+    row.onclick=()=>toggleTodo(i);
+    container.appendChild(row);
+  });
+}
+window.setTodoTab=function(cat){ activeTodoTab=cat; editingTodoIndex=null; renderTodo(); };
+window.addTodoTask=function(){
+  const inp=document.getElementById('todo-input');
+  const v=inp.value.trim(); if(!v)return;
+  migrateTodoState(); state.todo.tasks[activeTodoTab].push(v); inp.value='';
+  renderTodo(); scheduleSave();
+};
+window.toggleTodo=function(i){ migrateTodoState(); state.todo.done[activeTodoTab][i]=!state.todo.done[activeTodoTab][i]; renderTodo(); scheduleSave(); };
+window.startTodoEdit=function(i){ editingTodoIndex=i; renderTodo(); };
+window.saveTodoEdit=function(i){
+  const inp=document.getElementById(`todo-edit-${i}`); if(!inp)return;
+  const v=inp.value.trim(); if(!v)return;
+  state.todo.tasks[activeTodoTab][i]=v; editingTodoIndex=null; renderTodo(); scheduleSave();
+};
+window.cancelTodoEdit=function(){ editingTodoIndex=null; renderTodo(); };
+window.deleteTodoTask=function(i){
+  migrateTodoState(); state.todo.tasks[activeTodoTab].splice(i,1);
+  const old=state.todo.done[activeTodoTab]||{};
+  const nd={};
+  Object.keys(old).forEach(k=>{ const n=Number(k); if(n<i&&old[k])nd[n]=true; if(n>i&&old[k])nd[n-1]=true; });
+  state.todo.done[activeTodoTab]=nd; editingTodoIndex=null; renderTodo(); scheduleSave();
+};
+window.resetTodoCategoryToDefault=function(){
+  migrateTodoState(); state.todo.tasks[activeTodoTab]=clone(defaultTodoData[activeTodoTab]||[]);
+  state.todo.done[activeTodoTab]={}; editingTodoIndex=null; renderTodo(); scheduleSave();
+};
 
-function renderTodoTabs() {
-  const tabs = document.getElementById('todo-tabs');
-  tabs.innerHTML = '';
-
-  todoCategories.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'tab' + (activeTodoTab === cat ? ' active' : '');
-    btn.textContent = cat;
-    btn.onclick = () => setTodoTab(cat);
+// ─── STUDIES ─────────────────────────────────────────────────
+function renderStudiesTabs(){
+  const tabs=document.getElementById('studies-tabs');
+  tabs.innerHTML='';
+  studiesSubjects.forEach(sub=>{
+    const btn=document.createElement('button');
+    btn.className='studies-tab'+(activeStudiesSubject===sub?' active':'');
+    btn.textContent=sub;
+    btn.onclick=()=>{ activeStudiesSubject=sub; editingChapterId=null; renderStudies(); };
     tabs.appendChild(btn);
   });
 }
 
-function renderTodo() {
-  migrateTodoState();
-  renderTodoTabs();
+function renderStudies(){
+  migrateStudiesState();
+  renderStudiesTabs();
+  const chapters=state.studies[activeStudiesSubject]||[];
+  const container=document.getElementById('studies-content');
+  container.innerHTML='';
 
-  const container = document.getElementById('todo-content');
-  const tasks = state.todo.tasks[activeTodoTab] || [];
-  const checked = state.todo.done[activeTodoTab] || {};
-  const done = tasks.filter((_, i) => checked[i]).length;
-  const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+  // render each chapter card
+  chapters.forEach(ch=>{
+    const total=Number(ch.total)||0;
+    const comp=Math.min(Number(ch.completed)||0,total);
+    const left=total-comp;
+    const pct=total?Math.round((comp/total)*100):0;
+    const isEditing=editingChapterId===ch.id;
 
-  document.getElementById('todo-title').textContent = activeTodoTab;
-  document.getElementById('todo-badge').textContent = tasks.length + (tasks.length === 1 ? ' task' : ' tasks');
-  document.getElementById('todo-progress').style.width = pct + '%';
+    let badgeClass='not-started', badgeText='Not started';
+    if(pct===100){ badgeClass=''; badgeText='Done ✓'; }
+    else if(comp>0){ badgeClass='in-progress'; badgeText=pct+'%'; }
 
-  container.innerHTML = '';
+    const card=document.createElement('div');
+    card.className='chapter-card';
 
-  if (!tasks.length) {
-    container.innerHTML = '<div class="todo-empty">No tasks in this category yet.</div>';
-    return;
-  }
-
-  tasks.forEach((task, i) => {
-    const isDone = !!checked[i];
-    const isEditing = editingTodoIndex === i;
-    const row = document.createElement('div');
-    row.className = 'ex-row';
-
-    if (isEditing) {
-      row.innerHTML = `
-        <input class="todo-edit-input" id="todo-edit-${i}" value="${escapeAttr(task)}">
-        <div class="todo-actions">
-          <button class="todo-icon-btn" onclick="saveTodoEdit(${i}); event.stopPropagation();" title="Save"><i class="ti ti-check"></i></button>
-          <button class="todo-icon-btn" onclick="cancelTodoEdit(); event.stopPropagation();" title="Cancel"><i class="ti ti-x"></i></button>
-        </div>
-      `;
-      row.onclick = (e) => e.stopPropagation();
-      container.appendChild(row);
-
-      setTimeout(() => {
-        const input = document.getElementById(`todo-edit-${i}`);
-        if (input) {
-          input.focus();
-          input.setSelectionRange(input.value.length, input.value.length);
-          input.onkeydown = (e) => {
-            if (e.key === 'Enter') saveTodoEdit(i);
-            if (e.key === 'Escape') cancelTodoEdit();
-          };
-        }
-      }, 0);
+    if(isEditing){
+      card.innerHTML=`
+        <div class="chapter-header">
+          <input class="ch-name-edit" id="ch-name-edit-${ch.id}" value="${escapeAttr(ch.name)}">
+          <div class="chapter-actions">
+            <button class="ch-icon-btn" onclick="saveChapterName('${ch.id}')" title="Save"><i class="ti ti-check"></i></button>
+            <button class="ch-icon-btn" onclick="cancelChapterEdit()" title="Cancel"><i class="ti ti-x"></i></button>
+          </div>
+        </div>`;
+      container.appendChild(card);
+      setTimeout(()=>{ const i=document.getElementById(`ch-name-edit-${ch.id}`); if(i){i.focus();i.onkeydown=e=>{if(e.key==='Enter')saveChapterName(ch.id);if(e.key==='Escape')cancelChapterEdit();};} },0);
       return;
     }
 
-    row.innerHTML = `
-      <div class="ex-check ${isDone ? 'done' : ''}" onclick="toggleTodo(${i}); event.stopPropagation();">
-        ${isDone ? '<i class="ti ti-check" aria-hidden="true"></i>' : ''}
+    card.innerHTML=`
+      <div class="chapter-header">
+        <span class="chapter-name">${escapeHtml(ch.name)}</span>
+        <span class="chapter-done-badge ${badgeClass}">${badgeText}</span>
+        <div class="chapter-actions">
+          <button class="ch-icon-btn" onclick="editChapterName('${ch.id}')" title="Rename"><i class="ti ti-pencil"></i></button>
+          <button class="ch-icon-btn del" onclick="deleteChapter('${ch.id}')" title="Delete"><i class="ti ti-trash"></i></button>
+        </div>
       </div>
-      <span class="ex-name ${isDone ? 'done' : ''}">${escapeHtml(task)}</span>
-      <div class="todo-actions">
-        <button class="todo-icon-btn" onclick="startTodoEdit(${i}); event.stopPropagation();" title="Edit"><i class="ti ti-pencil"></i></button>
-        <button class="todo-icon-btn" onclick="deleteTodoTask(${i}); event.stopPropagation();" title="Delete"><i class="ti ti-trash"></i></button>
+      <div class="chapter-stats">
+        <div class="stat-field">
+          <span class="stat-label">Total</span>
+          <input class="stat-input" type="number" min="0" value="${total}" onchange="updateChapterStat('${ch.id}','total',this.value)" oninput="updateChapterStat('${ch.id}','total',this.value)">
+        </div>
+        <span class="stat-divider">·</span>
+        <div class="stat-field">
+          <span class="stat-label">Done</span>
+          <input class="stat-input" type="number" min="0" value="${comp}" onchange="updateChapterStat('${ch.id}','completed',this.value)" oninput="updateChapterStat('${ch.id}','completed',this.value)">
+        </div>
+        <span class="stat-divider">·</span>
+        <div class="stat-field">
+          <span class="stat-label">Left</span>
+          <span class="stat-computed">${left}</span>
+        </div>
+        <span class="stat-divider">·</span>
+        <div class="stat-field">
+          <span class="stat-label">%</span>
+          <span class="stat-computed ${pct===100?'summary-pct':''}">${pct}%</span>
+        </div>
       </div>
-    `;
-    row.onclick = () => toggleTodo(i);
-    container.appendChild(row);
+      <div class="chapter-prog-wrap"><div class="chapter-prog-fill" style="width:${pct}%"></div></div>`;
+    container.appendChild(card);
   });
-}
 
-function setTodoTab(cat) {
-  activeTodoTab = cat;
-  editingTodoIndex = null;
-  renderTodo();
-}
+  // Add chapter row
+  const addRow=document.createElement('div');
+  addRow.className='add-chapter-row';
+  addRow.innerHTML=`<input class="add-chapter-input" id="add-chapter-input" placeholder="Add chapter or lecture (e.g. Special Lecture Numericals)...">
+    <button class="add-chapter-btn" onclick="addChapter()"><i class="ti ti-plus"></i> Add</button>`;
+  container.appendChild(addRow);
+  document.getElementById('add-chapter-input').addEventListener('keydown',e=>{ if(e.key==='Enter')addChapter(); });
 
-function addTodoTask() {
-  const input = document.getElementById('todo-input');
-  const value = input.value.trim();
-  if (!value) return;
+  // Subject summary
+  const totals=chapters.reduce((a,c)=>({ t:a.t+(Number(c.total)||0), c:a.c+(Math.min(Number(c.completed)||0,Number(c.total)||0)) }),{t:0,c:0});
+  const sLeft=totals.t-totals.c;
+  const sPct=totals.t?((totals.c/totals.t)*100).toFixed(1):0;
+  const summaryEl=document.createElement('div');
+  summaryEl.className='studies-summary';
+  summaryEl.innerHTML=`
+    <div class="studies-summary-title">${activeStudiesSubject} — Summary</div>
+    <div class="summary-grid">
+      <div class="summary-stat"><div class="summary-stat-val">${totals.t}</div><div class="summary-stat-lbl">Total lectures</div></div>
+      <div class="summary-stat"><div class="summary-stat-val">${totals.c}</div><div class="summary-stat-lbl">Completed</div></div>
+      <div class="summary-stat"><div class="summary-stat-val">${sLeft}</div><div class="summary-stat-lbl">Remaining</div></div>
+      <div class="summary-stat"><div class="summary-stat-val summary-pct">${sPct}%</div><div class="summary-stat-lbl">Completion</div></div>
+    </div>`;
+  container.appendChild(summaryEl);
 
-  migrateTodoState();
-  state.todo.tasks[activeTodoTab].push(value);
-  input.value = '';
-  renderTodo();
-  scheduleSave();
-}
-
-function toggleTodo(i) {
-  migrateTodoState();
-  const done = state.todo.done[activeTodoTab];
-  done[i] = !done[i];
-  renderTodo();
-  scheduleSave();
-}
-
-function startTodoEdit(i) {
-  editingTodoIndex = i;
-  renderTodo();
-}
-
-function saveTodoEdit(i) {
-  const input = document.getElementById(`todo-edit-${i}`);
-  if (!input) return;
-
-  const value = input.value.trim();
-  if (!value) return;
-
-  state.todo.tasks[activeTodoTab][i] = value;
-  editingTodoIndex = null;
-  renderTodo();
-  scheduleSave();
-}
-
-function cancelTodoEdit() {
-  editingTodoIndex = null;
-  renderTodo();
-}
-
-function deleteTodoTask(i) {
-  migrateTodoState();
-
-  state.todo.tasks[activeTodoTab].splice(i, 1);
-
-  const oldDone = state.todo.done[activeTodoTab] || {};
-  const newDone = {};
-  Object.keys(oldDone).forEach(key => {
-    const oldIndex = Number(key);
-    if (oldIndex < i && oldDone[key]) newDone[oldIndex] = true;
-    if (oldIndex > i && oldDone[key]) newDone[oldIndex - 1] = true;
+  // Overall summary across all subjects
+  let oTotal=0,oComp=0;
+  studiesSubjects.forEach(sub=>{
+    (state.studies[sub]||[]).forEach(c=>{
+      const t=Number(c.total)||0;
+      const co=Math.min(Number(c.completed)||0,t);
+      oTotal+=t; oComp+=co;
+    });
   });
-  state.todo.done[activeTodoTab] = newDone;
-
-  editingTodoIndex = null;
-  renderTodo();
-  scheduleSave();
+  const oLeft=oTotal-oComp;
+  const oPct=oTotal?((oComp/oTotal)*100).toFixed(1):0;
+  const overallEl=document.createElement('div');
+  overallEl.className='overall-card';
+  overallEl.innerHTML=`
+    <div class="overall-title">Overall Progress</div>
+    <div class="overall-grid">
+      <div class="overall-stat"><div class="overall-val">${oTotal}</div><div class="overall-lbl">Total</div></div>
+      <div class="overall-stat"><div class="overall-val">${oComp}</div><div class="overall-lbl">Done</div></div>
+      <div class="overall-stat"><div class="overall-val">${oLeft}</div><div class="overall-lbl">Left</div></div>
+      <div class="overall-stat"><div class="overall-val" style="color:#2E6FD8">${oPct}%</div><div class="overall-lbl">Total %</div></div>
+    </div>
+    <div class="overall-prog"><div class="overall-prog-fill" style="width:${oPct}%"></div></div>`;
+  container.appendChild(overallEl);
 }
 
-function resetTodoCategory() {
-  migrateTodoState();
-  state.todo.done[activeTodoTab] = {};
-  renderTodo();
-  scheduleSave();
-}
+window.updateChapterStat=function(id,field,val){
+  migrateStudiesState();
+  const ch=state.studies[activeStudiesSubject].find(c=>c.id===id);
+  if(!ch)return;
+  ch[field]=Math.max(0,Number(val)||0);
+  if(field==='total'&&ch.completed>ch.total) ch.completed=ch.total;
+  if(field==='completed'&&ch.completed>ch.total) ch.completed=ch.total;
+  renderStudies(); scheduleSave();
+};
+window.editChapterName=function(id){ editingChapterId=id; renderStudies(); };
+window.saveChapterName=function(id){
+  const inp=document.getElementById(`ch-name-edit-${id}`); if(!inp)return;
+  const v=inp.value.trim(); if(!v)return;
+  const ch=state.studies[activeStudiesSubject].find(c=>c.id===id);
+  if(ch) ch.name=v;
+  editingChapterId=null; renderStudies(); scheduleSave();
+};
+window.cancelChapterEdit=function(){ editingChapterId=null; renderStudies(); };
+window.deleteChapter=function(id){
+  migrateStudiesState();
+  state.studies[activeStudiesSubject]=state.studies[activeStudiesSubject].filter(c=>c.id!==id);
+  renderStudies(); scheduleSave();
+};
+window.addChapter=function(){
+  const inp=document.getElementById('add-chapter-input');
+  const v=inp.value.trim(); if(!v)return;
+  migrateStudiesState();
+  const newId='ch_'+Date.now();
+  state.studies[activeStudiesSubject].push({id:newId,name:v,total:0,completed:0});
+  inp.value=''; renderStudies(); scheduleSave();
+};
 
-function resetTodoCategoryToDefault() {
-  migrateTodoState();
-  state.todo.tasks[activeTodoTab] = clone(defaultTodoData[activeTodoTab] || []);
-  state.todo.done[activeTodoTab] = {};
-  editingTodoIndex = null;
-  renderTodo();
-  scheduleSave();
-}
-
-function renderSchedule() {
-  const list = document.getElementById('sch-list');
-  const checked = state.schedule || {};
-  const done = scheduleItems.filter(it => checked[it.id]).length;
-  const pct = Math.round((done / scheduleItems.length) * 100);
-
-  document.getElementById('sch-progress').style.width = pct + '%';
-
-  list.innerHTML = scheduleItems.map(it => {
-    const isDone = !!checked[it.id];
-    return `<div class="sch-item ${isDone?'done-item':''}" style="background:${it.bg};color:${it.color};" onclick="toggleItem('schedule','${it.id}')">
-      <div class="sch-check ${isDone?'checked':''}" style="${isDone?'':'border-color:'+it.color+';opacity:.5'}">${isDone?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+// ─── SCHEDULE ────────────────────────────────────────────────
+function renderSchedule(){
+  const list=document.getElementById('sch-list');
+  const checked=state.schedule||{};
+  const done=scheduleItems.filter(it=>checked[it.id]).length;
+  const pct=Math.round((done/scheduleItems.length)*100);
+  document.getElementById('sch-progress').style.width=pct+'%';
+  list.innerHTML=scheduleItems.map(it=>{
+    const isDone=!!checked[it.id];
+    return `<div class="sch-item ${isDone?'done-item':''}" style="background:${it.bg};color:${it.color}" onclick="toggleItem('schedule','${it.id}')">
+      <div class="sch-check ${isDone?'checked':''}" style="${isDone?'':'border-color:'+it.color+';opacity:.5'}">${isDone?'<i class="ti ti-check"></i>':''}</div>
       <span class="sch-time" style="color:${it.color};opacity:.65">${it.time}</span>
       <span class="sch-label">${it.label}</span>
       <span class="sch-dur" style="background:${it.durBg};color:${it.color}">${it.dur}</span>
@@ -553,161 +718,96 @@ function renderSchedule() {
   }).join('');
 }
 
-function renderMeals() {
-  const list = document.getElementById('meal-list');
-  const checked = state.meals || {};
-  const done = mealsData.filter(m => checked[m.id]).length;
-  const pct = Math.round((done / mealsData.length) * 100);
-
-  document.getElementById('meal-progress').style.width = pct + '%';
-
-  list.innerHTML = mealsData.map(m => {
-    const isDone = !!checked[m.id];
-    return `<div class="meal-item ${isDone?'done-item':''}" style="background:${m.bg};color:${m.color};" onclick="toggleItem('meals','${m.id}')">
+// ─── MEALS ───────────────────────────────────────────────────
+function renderMeals(){
+  const list=document.getElementById('meal-list');
+  const checked=state.meals||{};
+  const done=mealsData.filter(m=>checked[m.id]).length;
+  const pct=Math.round((done/mealsData.length)*100);
+  document.getElementById('meal-progress').style.width=pct+'%';
+  list.innerHTML=mealsData.map(m=>{
+    const isDone=!!checked[m.id];
+    return `<div class="meal-item ${isDone?'done-item':''}" style="background:${m.bg};color:${m.color}" onclick="toggleItem('meals','${m.id}')">
       <div class="meal-top">
-        <div class="meal-check ${isDone?'checked':''}">${isDone?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
-        <span class="meal-name"><i class="ti ti-bowl" aria-hidden="true" style="font-size:14px;margin-right:5px"></i>${m.name}</span>
+        <div class="meal-check ${isDone?'checked':''}">${isDone?'<i class="ti ti-check"></i>':''}</div>
+        <span class="meal-name"><i class="ti ti-bowl" style="font-size:14px;margin-right:5px"></i>${m.name}</span>
         <span class="meal-kcal" style="background:${m.kcalBg};color:${m.color}">${m.kcal}</span>
       </div>
       <div class="meal-items">${m.items}</div>
       <div class="meal-macro">${m.macro}</div>
       <div class="meal-time">${m.time}</div>
     </div>`;
-  }).join('') + `<div class="total-row">
-    <div class="total-top"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:15px"></i>Daily total<span style="margin-left:auto;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--color-background-primary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)">1,765 kcal</span></div>
+  }).join('')+`<div class="total-row">
+    <div class="total-top"><i class="ti ti-chart-bar" style="font-size:15px"></i>Daily total
+      <span style="margin-left:auto;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--color-background-primary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)">1,765 kcal</span>
+    </div>
     <div class="total-macro">144.75g protein · 172g carbs · 31.5g fat</div>
   </div>`;
 }
 
-function renderWorkout() {
-  const woChecked = (state.workout || {})[activeDay] || {};
-  const day = workoutSchedule[activeDay];
-
-  document.getElementById('wo-day-title').textContent = activeDay + ' — ' + day.label;
-
-  const badge = document.getElementById('wo-day-badge');
-  badge.textContent = day.exercises.length + ' exercises';
-  badge.style.background = day.badge;
-  badge.style.color = day.text;
-  badge.style.border = 'none';
-
-  const done = Object.values(woChecked).filter(Boolean).length;
-  const pct = Math.round((done / day.exercises.length) * 100);
-  document.getElementById('wo-progress').style.width = pct + '%';
-
-  const list = document.getElementById('wo-list');
-  list.innerHTML = '';
-
-  day.exercises.forEach((ex, i) => {
-    const isDone = !!woChecked[i];
-    const row = document.createElement('div');
-    row.className = 'ex-row';
-    row.innerHTML = `<div class="ex-check ${isDone?'done':''}">${isDone?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div><span class="ex-name ${isDone?'done':''}">${ex.name}</span><span class="ex-sets">${ex.sets}</span>`;
-    row.onclick = () => toggleWorkout(i);
-    list.appendChild(row);
+// ─── WORKOUT ─────────────────────────────────────────────────
+function renderWorkout(){
+  const woChecked=(state.workout||{})[activeDay]||{};
+  const day=workoutSchedule[activeDay];
+  document.getElementById('wo-day-title').textContent=activeDay+' — '+day.label;
+  const badge=document.getElementById('wo-day-badge');
+  badge.textContent=day.exercises.length+' exercises';
+  badge.style.background=day.badge; badge.style.color=day.text; badge.style.border='none';
+  const done=Object.values(woChecked).filter(Boolean).length;
+  const pct=Math.round((done/day.exercises.length)*100);
+  document.getElementById('wo-progress').style.width=pct+'%';
+  const list=document.getElementById('wo-list'); list.innerHTML='';
+  day.exercises.forEach((ex,i)=>{
+    const isDone=!!woChecked[i];
+    const row=document.createElement('div'); row.className='ex-row';
+    row.innerHTML=`<div class="ex-check ${isDone?'done':''}">${isDone?'<i class="ti ti-check"></i>':''}</div><span class="ex-name ${isDone?'done':''}">${ex.name}</span><span class="ex-sets">${ex.sets}</span>`;
+    row.onclick=()=>toggleWorkout(i); list.appendChild(row);
   });
-
   renderWoTabs();
 }
-
-function renderWoTabs() {
-  const tabs = document.getElementById('wo-tabs');
-  tabs.innerHTML = '';
-
-  const todayBtn = document.createElement('button');
-  todayBtn.className = 'tab today-tab' + (activeDay===todayKey?' active':'');
-  todayBtn.textContent = 'Today';
-  todayBtn.onclick = () => setWoDay(todayKey);
-  tabs.appendChild(todayBtn);
-
-  days.forEach(d => {
-    const btn = document.createElement('button');
-    btn.className = 'tab' + (activeDay===d?' active':'');
-    btn.textContent = d;
-    btn.onclick = () => setWoDay(d);
-    tabs.appendChild(btn);
+function renderWoTabs(){
+  const tabs=document.getElementById('wo-tabs'); tabs.innerHTML='';
+  const todayBtn=document.createElement('button');
+  todayBtn.className='tab today-tab'+(activeDay===todayKey?' active':'');
+  todayBtn.textContent='Today'; todayBtn.onclick=()=>setWoDay(todayKey); tabs.appendChild(todayBtn);
+  days.forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='tab'+(activeDay===d?' active':'');
+    btn.textContent=d; btn.onclick=()=>setWoDay(d); tabs.appendChild(btn);
   });
 }
+window.setWoDay=function(d){ activeDay=d; renderWorkout(); };
 
-function setWoDay(d) {
-  activeDay = d;
-  renderWorkout();
-}
-
-function toggleItem(section, id) {
-  if (!state[section]) state[section] = {};
-  state[section][id] = !state[section][id];
-
-  if (section === 'schedule') renderSchedule();
-  else if (section === 'meals') renderMeals();
-
+// ─── TOGGLES / RESETS ────────────────────────────────────────
+window.toggleItem=function(section,id){
+  if(!state[section]) state[section]={};
+  state[section][id]=!state[section][id];
+  if(section==='schedule') renderSchedule();
+  else if(section==='meals') renderMeals();
   scheduleSave();
+};
+function toggleWorkout(i){
+  if(!state.workout) state.workout={};
+  if(!state.workout[activeDay]) state.workout[activeDay]={};
+  state.workout[activeDay][i]=!state.workout[activeDay][i];
+  renderWorkout(); scheduleSave();
 }
-
-function toggleWorkout(i) {
-  if (!state.workout) state.workout = {};
-  if (!state.workout[activeDay]) state.workout[activeDay] = {};
-  state.workout[activeDay][i] = !state.workout[activeDay][i];
-
-  renderWorkout();
+window.resetSection=function(section){
+  if(section==='todo'){ resetTodoCategory(); return; }
+  if(section==='workout'){ if(!state.workout)state.workout={}; state.workout[activeDay]={}; renderWorkout(); }
+  else{ state[section]={}; if(section==='schedule')renderSchedule(); else if(section==='meals')renderMeals(); }
   scheduleSave();
-}
+};
+function resetTodoCategory(){ migrateTodoState(); state.todo.done[activeTodoTab]={}; renderTodo(); scheduleSave(); }
 
-function resetSection(section) {
-  if (section === 'todo') {
-    resetTodoCategory();
-    return;
-  }
+// ─── RENDER ALL ───────────────────────────────────────────────
+function renderAll(){ renderTodo(); renderStudies(); renderSchedule(); renderMeals(); renderWorkout(); }
 
-  if (section === 'workout') {
-    if (!state.workout) state.workout = {};
-    state.workout[activeDay] = {};
-    renderWorkout();
-  } else {
-    state[section] = {};
-    if (section === 'schedule') renderSchedule();
-    else if (section === 'meals') renderMeals();
-  }
+// ─── UTILS ───────────────────────────────────────────────────
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+function escapeAttr(str){ return escapeHtml(str).replace(/`/g,'&#096;'); }
 
-  scheduleSave();
-}
-
-function renderAll() {
-  renderTodo();
-  renderSchedule();
-  renderMeals();
-  renderWorkout();
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, char => ({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;',
-    "'":'&#039;'
-  }[char]));
-}
-
-function escapeAttr(str) {
-  return escapeHtml(str).replace(/`/g, '&#096;');
-}
-
-document.getElementById('todo-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') addTodoTask();
-});
-
-window.showPanel = showPanel;
-window.resetSection = resetSection;
-window.toggleItem = toggleItem;
-window.setWoDay = setWoDay;
-window.addTodoTask = addTodoTask;
-window.toggleTodo = toggleTodo;
-window.startTodoEdit = startTodoEdit;
-window.saveTodoEdit = saveTodoEdit;
-window.cancelTodoEdit = cancelTodoEdit;
-window.deleteTodoTask = deleteTodoTask;
-window.resetTodoCategoryToDefault = resetTodoCategoryToDefault;
+document.getElementById('todo-input').addEventListener('keydown',e=>{ if(e.key==='Enter')addTodoTask(); });
 
 loadState();
 </script>
