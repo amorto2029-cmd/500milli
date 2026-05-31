@@ -21,7 +21,6 @@
 }
 body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-
 *{box-sizing:border-box;margin:0;padding:0}
 .app{padding:1.5rem 1rem;font-family:var(--font-sans)}
 .nav{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:4px}
@@ -41,7 +40,6 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .pf-green{background:#1D9E75}
 .pf-amber{background:#BA7517}
 .gap{height:8px}
-
 .sch-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--border-radius-md);margin-bottom:4px;cursor:pointer;transition:opacity .2s}
 .sch-item.done-item{opacity:.45}
 .sch-check{width:18px;height:18px;min-width:18px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
@@ -53,7 +51,6 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .sch-dur{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap;margin-left:auto}
 .reset-btn{margin-top:1rem;font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:none;border:none;padding:0}
 .reset-btn:hover{color:var(--color-text-primary)}
-
 .tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
 .tab{padding:5px 11px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
 .tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
@@ -70,7 +67,6 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .ex-name{font-size:14px;color:var(--color-text-primary);flex:1}
 .ex-name.done{text-decoration:line-through;color:var(--color-text-tertiary)}
 .ex-sets{font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
-
 .meal-item{border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:6px;cursor:pointer;transition:opacity .2s}
 .meal-item.done-item{opacity:.45}
 .meal-top{display:flex;align-items:center;gap:8px}
@@ -91,15 +87,32 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 <body>
 
 <div class="app">
-  <h2 class="sr-only">Daily planner with schedule, workout, and meals — all synced</h2>
-  <div class="sync-bar"><span class="sync-dot" id="syncDot"></span><span id="syncMsg">Connecting...</span></div>
+  <h2 class="sr-only">Daily planner with todo list, schedule, workout, and meals — all synced</h2>
+
+  <div class="sync-bar">
+    <span class="sync-dot" id="syncDot"></span>
+    <span id="syncMsg">Connecting...</span>
+  </div>
+
   <div class="nav" role="tablist">
-    <button class="nav-btn active" onclick="showPanel('schedule',this)" role="tab"><i class="ti ti-clock" aria-hidden="true"></i> Schedule</button>
+    <button class="nav-btn active" onclick="showPanel('todolist',this)" role="tab"><i class="ti ti-list-check" aria-hidden="true"></i> To Do</button>
+    <button class="nav-btn" onclick="showPanel('schedule',this)" role="tab"><i class="ti ti-clock" aria-hidden="true"></i> Schedule</button>
     <button class="nav-btn" onclick="showPanel('workout',this)" role="tab"><i class="ti ti-barbell" aria-hidden="true"></i> Workout</button>
     <button class="nav-btn" onclick="showPanel('meals',this)" role="tab"><i class="ti ti-bowl" aria-hidden="true"></i> Meals</button>
   </div>
 
-  <div id="panel-schedule" class="panel active">
+  <div id="panel-todolist" class="panel active">
+    <div class="tabs" id="todo-tabs"></div>
+    <div class="day-header">
+      <span class="day-title" id="todo-title">Daily</span>
+      <span class="day-badge" id="todo-badge">0 tasks</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill pf-green" id="todo-progress" style="width:0%"></div></div>
+    <div id="todo-content"></div>
+    <button class="reset-btn" onclick="resetSection('todo')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset category</button>
+  </div>
+
+  <div id="panel-schedule" class="panel">
     <div class="sh">Daily schedule</div>
     <div class="progress-bar"><div class="progress-fill pf-amber" id="sch-progress" style="width:0%"></div></div>
     <div id="sch-list"></div>
@@ -141,6 +154,72 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const todoData = {
+  Daily: [
+    "Upload 10 reels on cp",
+    "Upload 10 reels on yzy"
+  ],
+  Quick: [
+    "Clean phone (hardware + software)",
+    "Clean wardrobe",
+    "Cut nails",
+    "Get Meta money back"
+  ],
+  Fixing: [
+    "Make timetable to fix studies + backlog",
+    "Update CPU drivers",
+    "Update graphics drivers",
+    "Calculate electric components",
+    "Calculate net size",
+    "Deep clean PC",
+    "Fix audio driver",
+    "Make program to automate naming"
+  ],
+  Buy: [
+    "Buy T-shirts",
+    "Buy weighing machine",
+    "Buy stand",
+    "Buy belts",
+    "Buy Converse",
+    "Buy fan",
+    "Buy jeans",
+    "Buy lights",
+    "Buy mirror",
+    "Buy net",
+    "Buy pipe",
+    "Buy slides"
+  ],
+  Medium: [
+    "Walk all the way to cc (maybe)",
+    "List editors + pages willing to work with you"
+  ],
+  Learning: [
+    "Research Apple MacBooks and iPhones",
+    "Research how Polymarket & Kalshi prevent insider trading",
+    "Learn Claude Code",
+    "Learn editing in Premiere Pro / DaVinci Resolve properly"
+  ],
+  Installing: [
+    "Portal (install / learn)",
+    "Serum 2 banks",
+    "Zenology (install / learn)",
+    "FL Studio (set up / practice)",
+    "Get more drumkits"
+  ],
+  "Long Term": [
+    "Maybe learn French",
+    "Open up a new page",
+    "Research exams and colleges",
+    "Take programming seriously (plan + routine)",
+    "Crypto (learn + plan)",
+    "Decorate room plan (posters + layout)",
+    "Freelancing (setup + first outreach)"
+  ]
+};
+
+const todoCategories = ["Daily","Quick","Fixing","Buy","Medium","Learning","Installing","Long Term"];
+let activeTodoTab = "Daily";
+
 const scheduleItems = [
   {id:'s0',time:'8:00 AM',label:'Wake up · brush · face wash · clean bed',dur:'30m',bg:'#E1F5EE',color:'#085041',durBg:'#9FE1CB'},
   {id:'s1',time:'8:30 AM',label:'Breakfast',dur:'30m',bg:'#FAEEDA',color:'#633806',durBg:'#FAC775'},
@@ -170,12 +249,13 @@ const workoutSchedule = {
   Sat:{label:'Pull',badge:'#B5D4F4',text:'#0C447C',exercises:[{name:'Pull-ups or lat pulldown',sets:'4×8-12'},{name:'Chest-supported row',sets:'3×8-10'},{name:'Cable row',sets:'3×10-12'},{name:'Rear delt fly',sets:'3×12-15'},{name:'Dumbbell curls',sets:'3×10-12'},{name:'Hammer curls',sets:'2×12-15'}]},
   Sun:{label:'Abs & Cardio',badge:'#FAC775',text:'#633806',exercises:[{name:'Hanging leg raises',sets:'3×12-15'},{name:'Cable crunches',sets:'3×12-15'},{name:'Plank',sets:'3 sets'},{name:'Incline treadmill walk or stairmaster',sets:'20-30 min'}]}
 };
+
 const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const jsDay = new Date().getDay();
 const todayKey = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][jsDay];
 let activeDay = todayKey;
 
-let state = { schedule:{}, workout:{}, meals:{} };
+let state = { todo:{}, schedule:{}, workout:{}, meals:{} };
 let saveTimer = null;
 
 function setSyncStatus(s, msg) {
@@ -189,7 +269,11 @@ async function loadState() {
   try {
     const snap = await getDoc(doc(db, "planner", "planner_v1"));
     if (snap.exists()) {
-      state = snap.data().state || { schedule:{}, workout:{}, meals:{} };
+      state = snap.data().state || { todo:{}, schedule:{}, workout:{}, meals:{} };
+      if (!state.todo) state.todo = {};
+      if (!state.schedule) state.schedule = {};
+      if (!state.workout) state.workout = {};
+      if (!state.meals) state.meals = {};
     }
     setSyncStatus('ok','Synced — open on any device to sync');
   } catch(e) {
@@ -214,7 +298,10 @@ async function saveState() {
   }
 }
 
-function scheduleSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveState, 700); }
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveState, 700);
+}
 
 function showPanel(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -223,12 +310,69 @@ function showPanel(id, btn) {
   btn.classList.add('active');
 }
 
+function renderTodoTabs() {
+  const tabs = document.getElementById('todo-tabs');
+  tabs.innerHTML = '';
+
+  todoCategories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (activeTodoTab === cat ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => setTodoTab(cat);
+    tabs.appendChild(btn);
+  });
+}
+
+function renderTodo() {
+  renderTodoTabs();
+
+  const container = document.getElementById('todo-content');
+  const tasks = todoData[activeTodoTab] || [];
+  const checked = state.todo?.[activeTodoTab] || {};
+  const done = tasks.filter((_, i) => checked[i]).length;
+  const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+
+  document.getElementById('todo-title').textContent = activeTodoTab;
+  document.getElementById('todo-badge').textContent = tasks.length + ' tasks';
+  document.getElementById('todo-progress').style.width = pct + '%';
+
+  container.innerHTML = '';
+  tasks.forEach((task, i) => {
+    const isDone = !!checked[i];
+    const row = document.createElement('div');
+    row.className = 'ex-row';
+    row.innerHTML = `
+      <div class="ex-check ${isDone ? 'done' : ''}">
+        ${isDone ? '<i class="ti ti-check" aria-hidden="true"></i>' : ''}
+      </div>
+      <span class="ex-name ${isDone ? 'done' : ''}">${task}</span>
+    `;
+    row.onclick = () => toggleTodo(i);
+    container.appendChild(row);
+  });
+}
+
+function setTodoTab(cat) {
+  activeTodoTab = cat;
+  renderTodo();
+}
+
+function toggleTodo(i) {
+  if (!state.todo) state.todo = {};
+  if (!state.todo[activeTodoTab]) state.todo[activeTodoTab] = {};
+  state.todo[activeTodoTab][i] = !state.todo[activeTodoTab][i];
+  renderTodo();
+  scheduleSave();
+}
+
 function renderSchedule() {
   const list = document.getElementById('sch-list');
   const checked = state.schedule || {};
   const done = scheduleItems.filter(it => checked[it.id]).length;
   const pct = Math.round((done / scheduleItems.length) * 100);
+
   document.getElementById('sch-progress').style.width = pct + '%';
+
   list.innerHTML = scheduleItems.map(it => {
     const isDone = !!checked[it.id];
     return `<div class="sch-item ${isDone?'done-item':''}" style="background:${it.bg};color:${it.color};" onclick="toggleItem('schedule','${it.id}')">
@@ -245,7 +389,9 @@ function renderMeals() {
   const checked = state.meals || {};
   const done = mealsData.filter(m => checked[m.id]).length;
   const pct = Math.round((done / mealsData.length) * 100);
+
   document.getElementById('meal-progress').style.width = pct + '%';
+
   list.innerHTML = mealsData.map(m => {
     const isDone = !!checked[m.id];
     return `<div class="meal-item ${isDone?'done-item':''}" style="background:${m.bg};color:${m.color};" onclick="toggleItem('meals','${m.id}')">
@@ -267,16 +413,21 @@ function renderMeals() {
 function renderWorkout() {
   const woChecked = (state.workout || {})[activeDay] || {};
   const day = workoutSchedule[activeDay];
+
   document.getElementById('wo-day-title').textContent = activeDay + ' — ' + day.label;
+
   const badge = document.getElementById('wo-day-badge');
   badge.textContent = day.exercises.length + ' exercises';
   badge.style.background = day.badge;
   badge.style.color = day.text;
+
   const done = Object.values(woChecked).filter(Boolean).length;
   const pct = Math.round((done / day.exercises.length) * 100);
   document.getElementById('wo-progress').style.width = pct + '%';
+
   const list = document.getElementById('wo-list');
   list.innerHTML = '';
+
   day.exercises.forEach((ex, i) => {
     const isDone = !!woChecked[i];
     const row = document.createElement('div');
@@ -285,17 +436,20 @@ function renderWorkout() {
     row.onclick = () => toggleWorkout(i);
     list.appendChild(row);
   });
+
   renderWoTabs();
 }
 
 function renderWoTabs() {
   const tabs = document.getElementById('wo-tabs');
   tabs.innerHTML = '';
+
   const todayBtn = document.createElement('button');
   todayBtn.className = 'tab today-tab' + (activeDay===todayKey?' active':'');
   todayBtn.textContent = 'Today';
   todayBtn.onclick = () => setWoDay(todayKey);
   tabs.appendChild(todayBtn);
+
   days.forEach(d => {
     const btn = document.createElement('button');
     btn.className = 'tab' + (activeDay===d?' active':'');
@@ -305,13 +459,18 @@ function renderWoTabs() {
   });
 }
 
-function setWoDay(d) { activeDay = d; renderWorkout(); }
+function setWoDay(d) {
+  activeDay = d;
+  renderWorkout();
+}
 
 function toggleItem(section, id) {
   if (!state[section]) state[section] = {};
   state[section][id] = !state[section][id];
+
   if (section === 'schedule') renderSchedule();
   else if (section === 'meals') renderMeals();
+
   scheduleSave();
 }
 
@@ -319,24 +478,35 @@ function toggleWorkout(i) {
   if (!state.workout) state.workout = {};
   if (!state.workout[activeDay]) state.workout[activeDay] = {};
   state.workout[activeDay][i] = !state.workout[activeDay][i];
+
   renderWorkout();
   scheduleSave();
 }
 
 function resetSection(section) {
-  if (section === 'workout') {
+  if (section === 'todo') {
+    if (!state.todo) state.todo = {};
+    state.todo[activeTodoTab] = {};
+    renderTodo();
+  } else if (section === 'workout') {
     if (!state.workout) state.workout = {};
     state.workout[activeDay] = {};
     renderWorkout();
   } else {
     state[section] = {};
     if (section === 'schedule') renderSchedule();
-    else renderMeals();
+    else if (section === 'meals') renderMeals();
   }
+
   scheduleSave();
 }
 
-function renderAll() { renderSchedule(); renderMeals(); renderWorkout(); }
+function renderAll() {
+  renderTodo();
+  renderSchedule();
+  renderMeals();
+  renderWorkout();
+}
 
 window.showPanel = showPanel;
 window.resetSection = resetSection;
