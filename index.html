@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>500 Milli Planner</title>
+<title>500</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 :root{
@@ -22,7 +22,7 @@
 body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 *{box-sizing:border-box;margin:0;padding:0}
-.app{padding:1.5rem 1rem;font-family:var(--font-sans)}
+.app{padding:1.5rem 1rem;font-family:var(--font-sans);max-width:760px;margin:0 auto}
 .nav{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:4px}
 .nav-btn{flex:1;padding:7px 0;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:calc(var(--border-radius-md) - 2px);color:var(--color-text-secondary);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
 .nav-btn.active{background:var(--color-background-primary);color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary)}
@@ -40,6 +40,29 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .pf-green{background:#1D9E75}
 .pf-amber{background:#BA7517}
 .gap{height:8px}
+
+.tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:5px 11px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.tab.today-tab{border-color:#1D9E75;color:#085041;background:#E1F5EE}
+.tab.today-tab.active{background:#9FE1CB;color:#04342C;border-color:#0F6E56}
+
+.day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.day-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.day-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+
+.todo-add{display:flex;gap:8px;margin-bottom:14px}
+.todo-input{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 11px;font-size:13px;font-family:var(--font-sans);outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
+.todo-input:focus{border-color:var(--color-border-primary)}
+.todo-add-btn,.todo-icon-btn{border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
+.todo-add-btn{padding:0 12px;font-size:13px;font-weight:500}
+.todo-icon-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.todo-icon-btn:hover,.todo-add-btn:hover{color:var(--color-text-primary);border-color:var(--color-border-primary);background:var(--color-background-primary)}
+.todo-actions{display:flex;gap:5px;margin-left:auto}
+.todo-edit-input{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 9px;font-size:14px;font-family:var(--font-sans);outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
+.todo-empty{font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px}
+.todo-hint{font-size:11px;color:var(--color-text-tertiary);margin-top:-6px;margin-bottom:12px}
+
 .sch-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--border-radius-md);margin-bottom:4px;cursor:pointer;transition:opacity .2s}
 .sch-item.done-item{opacity:.45}
 .sch-check{width:18px;height:18px;min-width:18px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
@@ -51,14 +74,7 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .sch-dur{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap;margin-left:auto}
 .reset-btn{margin-top:1rem;font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:none;border:none;padding:0}
 .reset-btn:hover{color:var(--color-text-primary)}
-.tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
-.tab{padding:5px 11px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
-.tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
-.tab.today-tab{border-color:#1D9E75;color:#085041;background:#E1F5EE}
-.tab.today-tab.active{background:#9FE1CB;color:#04342C;border-color:#0F6E56}
-.day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.day-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
-.day-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+
 .ex-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
 .ex-row:last-child{border-bottom:none}
 .ex-check{width:18px;height:18px;min-width:18px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;transition:all .15s}
@@ -67,6 +83,7 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 .ex-name{font-size:14px;color:var(--color-text-primary);flex:1}
 .ex-name.done{text-decoration:line-through;color:var(--color-text-tertiary)}
 .ex-sets{font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
+
 .meal-item{border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:6px;cursor:pointer;transition:opacity .2s}
 .meal-item.done-item{opacity:.45}
 .meal-top{display:flex;align-items:center;gap:8px}
@@ -87,7 +104,7 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 <body>
 
 <div class="app">
-  <h2 class="sr-only">Daily planner with todo list, schedule, workout, and meals — all synced</h2>
+  <h2 class="sr-only">Daily planner with editable todo list, schedule, workout, and meals — all synced</h2>
 
   <div class="sync-bar">
     <span class="sync-dot" id="syncDot"></span>
@@ -103,12 +120,24 @@ body{margin:0;background:var(--color-background-primary);color:var(--color-text-
 
   <div id="panel-todolist" class="panel active">
     <div class="tabs" id="todo-tabs"></div>
+
     <div class="day-header">
       <span class="day-title" id="todo-title">Daily</span>
       <span class="day-badge" id="todo-badge">0 tasks</span>
     </div>
-    <div class="progress-bar"><div class="progress-fill pf-green" id="todo-progress" style="width:0%"></div></div>
+
+    <div class="progress-bar">
+      <div class="progress-fill pf-green" id="todo-progress" style="width:0%"></div>
+    </div>
+
+    <div class="todo-add">
+      <input class="todo-input" id="todo-input" placeholder="Add new task...">
+      <button class="todo-add-btn" onclick="addTodoTask()">Add</button>
+    </div>
+    <div class="todo-hint">Click the checkbox to complete. Use the pencil to edit or trash to delete.</div>
+
     <div id="todo-content"></div>
+
     <button class="reset-btn" onclick="resetSection('todo')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset category</button>
   </div>
 
@@ -154,7 +183,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const todoData = {
+const defaultTodoData = {
   Daily: [
     "Upload 10 reels on cp",
     "Upload 10 reels on yzy"
@@ -219,6 +248,7 @@ const todoData = {
 
 const todoCategories = ["Daily","Quick","Fixing","Buy","Medium","Learning","Installing","Long Term"];
 let activeTodoTab = "Daily";
+let editingTodoIndex = null;
 
 const scheduleItems = [
   {id:'s0',time:'8:00 AM',label:'Wake up · brush · face wash · clean bed',dur:'30m',bg:'#E1F5EE',color:'#085041',durBg:'#9FE1CB'},
@@ -255,8 +285,35 @@ const jsDay = new Date().getDay();
 const todayKey = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][jsDay];
 let activeDay = todayKey;
 
-let state = { todo:{}, schedule:{}, workout:{}, meals:{} };
+let state = { todo:{ tasks:{}, done:{} }, schedule:{}, workout:{}, meals:{} };
 let saveTimer = null;
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function migrateTodoState() {
+  if (!state.todo || Array.isArray(state.todo) || !state.todo.tasks) {
+    const oldDone = state.todo && !state.todo.tasks ? state.todo : {};
+    state.todo = { tasks: clone(defaultTodoData), done: {} };
+
+    todoCategories.forEach(cat => {
+      state.todo.done[cat] = {};
+      const oldCatDone = oldDone?.[cat] || {};
+      Object.keys(oldCatDone).forEach(i => {
+        if (oldCatDone[i]) state.todo.done[cat][i] = true;
+      });
+    });
+  }
+
+  if (!state.todo.tasks) state.todo.tasks = clone(defaultTodoData);
+  if (!state.todo.done) state.todo.done = {};
+
+  todoCategories.forEach(cat => {
+    if (!state.todo.tasks[cat]) state.todo.tasks[cat] = clone(defaultTodoData[cat] || []);
+    if (!state.todo.done[cat]) state.todo.done[cat] = {};
+  });
+}
 
 function setSyncStatus(s, msg) {
   const dot = document.getElementById('syncDot');
@@ -269,15 +326,18 @@ async function loadState() {
   try {
     const snap = await getDoc(doc(db, "planner", "planner_v1"));
     if (snap.exists()) {
-      state = snap.data().state || { todo:{}, schedule:{}, workout:{}, meals:{} };
-      if (!state.todo) state.todo = {};
-      if (!state.schedule) state.schedule = {};
-      if (!state.workout) state.workout = {};
-      if (!state.meals) state.meals = {};
+      state = snap.data().state || { todo:{ tasks:{}, done:{} }, schedule:{}, workout:{}, meals:{} };
     }
+
+    if (!state.schedule) state.schedule = {};
+    if (!state.workout) state.workout = {};
+    if (!state.meals) state.meals = {};
+    migrateTodoState();
+
     setSyncStatus('ok','Synced — open on any device to sync');
   } catch(e) {
     console.error(e);
+    migrateTodoState();
     setSyncStatus('error','Load failed — check Firestore rules');
   }
   renderAll();
@@ -324,28 +384,66 @@ function renderTodoTabs() {
 }
 
 function renderTodo() {
+  migrateTodoState();
   renderTodoTabs();
 
   const container = document.getElementById('todo-content');
-  const tasks = todoData[activeTodoTab] || [];
-  const checked = state.todo?.[activeTodoTab] || {};
+  const tasks = state.todo.tasks[activeTodoTab] || [];
+  const checked = state.todo.done[activeTodoTab] || {};
   const done = tasks.filter((_, i) => checked[i]).length;
   const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
 
   document.getElementById('todo-title').textContent = activeTodoTab;
-  document.getElementById('todo-badge').textContent = tasks.length + ' tasks';
+  document.getElementById('todo-badge').textContent = tasks.length + (tasks.length === 1 ? ' task' : ' tasks');
   document.getElementById('todo-progress').style.width = pct + '%';
 
   container.innerHTML = '';
+
+  if (!tasks.length) {
+    container.innerHTML = '<div class="todo-empty">No tasks in this category yet.</div>';
+    return;
+  }
+
   tasks.forEach((task, i) => {
     const isDone = !!checked[i];
+    const isEditing = editingTodoIndex === i;
     const row = document.createElement('div');
     row.className = 'ex-row';
+
+    if (isEditing) {
+      row.innerHTML = `
+        <input class="todo-edit-input" id="todo-edit-${i}" value="${escapeAttr(task)}">
+        <div class="todo-actions">
+          <button class="todo-icon-btn" onclick="saveTodoEdit(${i}); event.stopPropagation();" title="Save"><i class="ti ti-check"></i></button>
+          <button class="todo-icon-btn" onclick="cancelTodoEdit(); event.stopPropagation();" title="Cancel"><i class="ti ti-x"></i></button>
+        </div>
+      `;
+      row.onclick = (e) => e.stopPropagation();
+      container.appendChild(row);
+
+      setTimeout(() => {
+        const input = document.getElementById(`todo-edit-${i}`);
+        if (input) {
+          input.focus();
+          input.setSelectionRange(input.value.length, input.value.length);
+          input.onkeydown = (e) => {
+            if (e.key === 'Enter') saveTodoEdit(i);
+            if (e.key === 'Escape') cancelTodoEdit();
+          };
+        }
+      }, 0);
+      return;
+    }
+
     row.innerHTML = `
-      <div class="ex-check ${isDone ? 'done' : ''}">
+      <div class="ex-check ${isDone ? 'done' : ''}" onclick="toggleTodo(${i}); event.stopPropagation();">
         ${isDone ? '<i class="ti ti-check" aria-hidden="true"></i>' : ''}
       </div>
-      <span class="ex-name ${isDone ? 'done' : ''}">${task}</span>
+      <span class="ex-name ${isDone ? 'done' : ''}">${escapeHtml(task)}</span>
+      <div class="todo-actions">
+        <button class="todo-icon-btn" onclick="startTodoEdit(${i}); event.stopPropagation();" title="Edit"><i class="ti ti-pencil"></i></button>
+        <button class="todo-icon-btn" onclick="deleteTodoTask(${i}); event.stopPropagation();" title="Delete"><i class="ti ti-trash"></i></button>
+      </div>
     `;
     row.onclick = () => toggleTodo(i);
     container.appendChild(row);
@@ -354,13 +452,84 @@ function renderTodo() {
 
 function setTodoTab(cat) {
   activeTodoTab = cat;
+  editingTodoIndex = null;
   renderTodo();
 }
 
+function addTodoTask() {
+  const input = document.getElementById('todo-input');
+  const value = input.value.trim();
+  if (!value) return;
+
+  migrateTodoState();
+  state.todo.tasks[activeTodoTab].push(value);
+  input.value = '';
+  renderTodo();
+  scheduleSave();
+}
+
 function toggleTodo(i) {
-  if (!state.todo) state.todo = {};
-  if (!state.todo[activeTodoTab]) state.todo[activeTodoTab] = {};
-  state.todo[activeTodoTab][i] = !state.todo[activeTodoTab][i];
+  migrateTodoState();
+  const done = state.todo.done[activeTodoTab];
+  done[i] = !done[i];
+  renderTodo();
+  scheduleSave();
+}
+
+function startTodoEdit(i) {
+  editingTodoIndex = i;
+  renderTodo();
+}
+
+function saveTodoEdit(i) {
+  const input = document.getElementById(`todo-edit-${i}`);
+  if (!input) return;
+
+  const value = input.value.trim();
+  if (!value) return;
+
+  state.todo.tasks[activeTodoTab][i] = value;
+  editingTodoIndex = null;
+  renderTodo();
+  scheduleSave();
+}
+
+function cancelTodoEdit() {
+  editingTodoIndex = null;
+  renderTodo();
+}
+
+function deleteTodoTask(i) {
+  migrateTodoState();
+
+  state.todo.tasks[activeTodoTab].splice(i, 1);
+
+  const oldDone = state.todo.done[activeTodoTab] || {};
+  const newDone = {};
+  Object.keys(oldDone).forEach(key => {
+    const oldIndex = Number(key);
+    if (oldIndex < i && oldDone[key]) newDone[oldIndex] = true;
+    if (oldIndex > i && oldDone[key]) newDone[oldIndex - 1] = true;
+  });
+  state.todo.done[activeTodoTab] = newDone;
+
+  editingTodoIndex = null;
+  renderTodo();
+  scheduleSave();
+}
+
+function resetTodoCategory() {
+  migrateTodoState();
+  state.todo.done[activeTodoTab] = {};
+  renderTodo();
+  scheduleSave();
+}
+
+function resetTodoCategoryToDefault() {
+  migrateTodoState();
+  state.todo.tasks[activeTodoTab] = clone(defaultTodoData[activeTodoTab] || []);
+  state.todo.done[activeTodoTab] = {};
+  editingTodoIndex = null;
   renderTodo();
   scheduleSave();
 }
@@ -420,6 +589,7 @@ function renderWorkout() {
   badge.textContent = day.exercises.length + ' exercises';
   badge.style.background = day.badge;
   badge.style.color = day.text;
+  badge.style.border = 'none';
 
   const done = Object.values(woChecked).filter(Boolean).length;
   const pct = Math.round((done / day.exercises.length) * 100);
@@ -485,10 +655,11 @@ function toggleWorkout(i) {
 
 function resetSection(section) {
   if (section === 'todo') {
-    if (!state.todo) state.todo = {};
-    state.todo[activeTodoTab] = {};
-    renderTodo();
-  } else if (section === 'workout') {
+    resetTodoCategory();
+    return;
+  }
+
+  if (section === 'workout') {
     if (!state.workout) state.workout = {};
     state.workout[activeDay] = {};
     renderWorkout();
@@ -508,10 +679,35 @@ function renderAll() {
   renderWorkout();
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#039;'
+  }[char]));
+}
+
+function escapeAttr(str) {
+  return escapeHtml(str).replace(/`/g, '&#096;');
+}
+
+document.getElementById('todo-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addTodoTask();
+});
+
 window.showPanel = showPanel;
 window.resetSection = resetSection;
 window.toggleItem = toggleItem;
 window.setWoDay = setWoDay;
+window.addTodoTask = addTodoTask;
+window.toggleTodo = toggleTodo;
+window.startTodoEdit = startTodoEdit;
+window.saveTodoEdit = saveTodoEdit;
+window.cancelTodoEdit = cancelTodoEdit;
+window.deleteTodoTask = deleteTodoTask;
+window.resetTodoCategoryToDefault = resetTodoCategoryToDefault;
 
 loadState();
 </script>
