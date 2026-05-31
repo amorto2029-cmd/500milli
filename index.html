@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>500 Milli Planner</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f6f6f6;
+  --color-border-primary:#c9c9c9;
+  --color-border-secondary:#d7d7d7;
+  --color-border-tertiary:#e5e5e5;
+  --color-text-primary:#161616;
+  --color-text-secondary:#666666;
+  --color-text-tertiary:#999999;
+  --border-radius-lg:14px;
+  --border-radius-md:10px;
+}
+body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+*{box-sizing:border-box;margin:0;padding:0}
+.app{padding:1.5rem 1rem;font-family:var(--font-sans)}
+.nav{display:flex;gap:4px;margin-bottom:1.25rem;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:4px}
+.nav-btn{flex:1;padding:7px 0;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:calc(var(--border-radius-md) - 2px);color:var(--color-text-secondary);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
+.nav-btn.active{background:var(--color-background-primary);color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary)}
+.nav-btn i{font-size:15px}
+.panel{display:none}
+.panel.active{display:block}
+.sync-bar{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 10px;margin-bottom:1.25rem}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:#639922;flex-shrink:0}
+.sync-dot.syncing{background:#BA7517;animation:pulse 1s infinite}
+.sync-dot.error{background:#E24B4A}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.sh{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem}
+.progress-bar{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width .3s}
+.pf-green{background:#1D9E75}
+.pf-amber{background:#BA7517}
+.gap{height:8px}
+
+.sch-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--border-radius-md);margin-bottom:4px;cursor:pointer;transition:opacity .2s}
+.sch-item.done-item{opacity:.45}
+.sch-check{width:18px;height:18px;min-width:18px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.sch-check.checked{border-color:currentColor;background:currentColor}
+.sch-check.checked i{color:white;font-size:11px}
+.sch-time{font-size:11px;min-width:52px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+.sch-label{flex:1;font-size:14px;font-weight:500}
+.sch-item.done-item .sch-label{text-decoration:line-through}
+.sch-dur{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap;margin-left:auto}
+.reset-btn{margin-top:1rem;font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:none;border:none;padding:0}
+.reset-btn:hover{color:var(--color-text-primary)}
+
+.tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:5px 11px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.tab.today-tab{border-color:#1D9E75;color:#085041;background:#E1F5EE}
+.tab.today-tab.active{background:#9FE1CB;color:#04342C;border-color:#0F6E56}
+.day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.day-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.day-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.ex-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
+.ex-row:last-child{border-bottom:none}
+.ex-check{width:18px;height:18px;min-width:18px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ex-check.done{background:#1D9E75;border-color:#1D9E75}
+.ex-check.done i{color:#fff;font-size:11px}
+.ex-name{font-size:14px;color:var(--color-text-primary);flex:1}
+.ex-name.done{text-decoration:line-through;color:var(--color-text-tertiary)}
+.ex-sets{font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
+
+.meal-item{border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:6px;cursor:pointer;transition:opacity .2s}
+.meal-item.done-item{opacity:.45}
+.meal-top{display:flex;align-items:center;gap:8px}
+.meal-check{width:18px;height:18px;min-width:18px;border-radius:4px;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;opacity:.6}
+.meal-check.checked{background:currentColor;opacity:1}
+.meal-check.checked i{color:white;font-size:11px}
+.meal-name{font-size:14px;font-weight:500;flex:1}
+.meal-item.done-item .meal-name{text-decoration:line-through}
+.meal-kcal{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;margin-left:auto;white-space:nowrap}
+.meal-items{font-size:12px;padding-left:26px;margin-top:4px;opacity:.85;line-height:1.7}
+.meal-macro{font-size:11px;font-weight:500;padding-left:26px;margin-top:3px;opacity:.65}
+.meal-time{font-size:11px;opacity:.6;padding-left:26px;margin-top:2px}
+.total-row{border-radius:var(--border-radius-md);padding:10px 14px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);margin-top:8px}
+.total-top{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.total-macro{font-size:11px;color:var(--color-text-secondary);padding-left:26px;margin-top:3px}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <h2 class="sr-only">Daily planner with schedule, workout, and meals — all synced</h2>
+  <div class="sync-bar"><span class="sync-dot" id="syncDot"></span><span id="syncMsg">Connecting...</span></div>
+  <div class="nav" role="tablist">
+    <button class="nav-btn active" onclick="showPanel('schedule',this)" role="tab"><i class="ti ti-clock" aria-hidden="true"></i> Schedule</button>
+    <button class="nav-btn" onclick="showPanel('workout',this)" role="tab"><i class="ti ti-barbell" aria-hidden="true"></i> Workout</button>
+    <button class="nav-btn" onclick="showPanel('meals',this)" role="tab"><i class="ti ti-bowl" aria-hidden="true"></i> Meals</button>
+  </div>
+
+  <div id="panel-schedule" class="panel active">
+    <div class="sh">Daily schedule</div>
+    <div class="progress-bar"><div class="progress-fill pf-amber" id="sch-progress" style="width:0%"></div></div>
+    <div id="sch-list"></div>
+    <button class="reset-btn" onclick="resetSection('schedule')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+  </div>
+
+  <div id="panel-workout" class="panel">
+    <div class="tabs" id="wo-tabs"></div>
+    <div class="day-header">
+      <span class="day-title" id="wo-day-title"></span>
+      <span class="day-badge" id="wo-day-badge"></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill pf-green" id="wo-progress" style="width:0%"></div></div>
+    <div id="wo-list"></div>
+    <button class="reset-btn" onclick="resetSection('workout')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset day</button>
+  </div>
+
+  <div id="panel-meals" class="panel">
+    <div class="sh">Daily meal plan</div>
+    <div class="progress-bar"><div class="progress-fill pf-green" id="meal-progress" style="width:0%"></div></div>
+    <div id="meal-list"></div>
+    <button class="reset-btn" onclick="resetSection('meals')"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCJiQWvtQL7IqaQJqukG3j1oSDDiILj-7M",
+  authDomain: "mili-d0d16.firebaseapp.com",
+  projectId: "mili-d0d16",
+  storageBucket: "mili-d0d16.firebasestorage.app",
+  messagingSenderId: "130965917067",
+  appId: "1:130965917067:web:11d52be6189c02a2f4338e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const scheduleItems = [
+  {id:'s0',time:'8:00 AM',label:'Wake up · brush · face wash · clean bed',dur:'30m',bg:'#E1F5EE',color:'#085041',durBg:'#9FE1CB'},
+  {id:'s1',time:'8:30 AM',label:'Breakfast',dur:'30m',bg:'#FAEEDA',color:'#633806',durBg:'#FAC775'},
+  {id:'s2',time:'9:00 AM',label:'Reels for the day',dur:'1hr',bg:'#FBEAF0',color:'#72243E',durBg:'#F4C0D1'},
+  {id:'s3',time:'10:00 AM',label:'Gym',dur:'2hrs',bg:'#EAF3DE',color:'#27500A',durBg:'#C0DD97'},
+  {id:'s4',time:'12:00 PM',label:'Bathe & rest',dur:'1hr',bg:'#F1EFE8',color:'#444441',durBg:'#D3D1C7'},
+  {id:'s5',time:'1:00 PM',label:'Lunch',dur:'1hr',bg:'#FAEEDA',color:'#633806',durBg:'#FAC775'},
+  {id:'s6',time:'2:00 PM',label:'Study / learn with breaks',dur:'6.5hrs',bg:'#E6F1FB',color:'#0C447C',durBg:'#B5D4F4'},
+  {id:'s7',time:'8:30 PM',label:'Upload reels',dur:'1hr',bg:'#FBEAF0',color:'#72243E',durBg:'#F4C0D1'},
+  {id:'s8',time:'9:30 PM',label:'Dinner & family',dur:'1hr',bg:'#FAEEDA',color:'#633806',durBg:'#FAC775'},
+  {id:'s9',time:'10:30 PM',label:'Study / learn with breaks',dur:'2hrs',bg:'#E6F1FB',color:'#0C447C',durBg:'#B5D4F4'},
+  {id:'s10',time:'12:30 AM',label:'Sleep',dur:'7.5hrs',bg:'#EEEDFE',color:'#3C3489',durBg:'#CECBF6'}
+];
+
+const mealsData = [
+  {id:'m0',time:'8:30 AM',name:'Breakfast',kcal:'641 kcal',items:'3 poached eggs · 4 slices brown bread · 250ml Amul Slim & Trim milk',macro:'39g protein · 57g carbs · 14g fat',bg:'#FAEEDA',color:'#633806',kcalBg:'#FAC775'},
+  {id:'m1',time:'1:00 PM',name:'Lunch',kcal:'535 kcal',items:'250g raw chicken breast (cooked with minimal oil, yogurt & spices) · 200g cooked basmati rice',macro:'62g protein · 57g carbs · 4.5g fat',bg:'#EAF3DE',color:'#27500A',kcalBg:'#C0DD97'},
+  {id:'m2',time:'9:30 PM',name:'Dinner',kcal:'589 kcal',items:'750ml Amul Slim & Trim milk · 2 poached eggs · 1 slice brown bread · 1 banana',macro:'43.75g protein · 58g carbs · 13g fat',bg:'#E1F5EE',color:'#085041',kcalBg:'#9FE1CB'}
+];
+
+const workoutSchedule = {
+  Mon:{label:'Push',badge:'#F4C0D1',text:'#72243E',exercises:[{name:'Incline dumbbell press',sets:'3×8-10'},{name:'Flat chest press',sets:'3×6-8'},{name:'Seated dumbbell shoulder press',sets:'3×8-10'},{name:'Cable lateral raises',sets:'4×12-15'},{name:'Pec deck or cable fly',sets:'2×12-15'},{name:'Rope pushdowns',sets:'3×10-12'},{name:'Overhead tricep extension',sets:'2×12-15'}]},
+  Tue:{label:'Pull',badge:'#B5D4F4',text:'#0C447C',exercises:[{name:'Pull-ups or lat pulldown',sets:'4×8-12'},{name:'Chest-supported row',sets:'3×8-10'},{name:'Cable row',sets:'3×10-12'},{name:'Rear delt fly',sets:'3×12-15'},{name:'Dumbbell curls',sets:'3×10-12'},{name:'Hammer curls',sets:'2×12-15'}]},
+  Wed:{label:'Legs',badge:'#C0DD97',text:'#27500A',exercises:[{name:'Leg press',sets:'3×10-12'},{name:'Bulgarian split squat',sets:'2×10 each'},{name:'Hamstring curl',sets:'3×10-12'},{name:'Calf raises',sets:'4×12-15'}]},
+  Thu:{label:'Abs & Cardio',badge:'#FAC775',text:'#633806',exercises:[{name:'Hanging leg raises',sets:'3×12-15'},{name:'Cable crunches',sets:'3×12-15'},{name:'Plank',sets:'3 sets'},{name:'Incline treadmill walk or stairmaster',sets:'20-30 min'}]},
+  Fri:{label:'Push',badge:'#F4C0D1',text:'#72243E',exercises:[{name:'Incline dumbbell press',sets:'3×8-10'},{name:'Flat chest press',sets:'3×6-8'},{name:'Seated dumbbell shoulder press',sets:'3×8-10'},{name:'Cable lateral raises',sets:'4×12-15'},{name:'Pec deck or cable fly',sets:'2×12-15'},{name:'Rope pushdowns',sets:'3×10-12'},{name:'Overhead tricep extension',sets:'2×12-15'}]},
+  Sat:{label:'Pull',badge:'#B5D4F4',text:'#0C447C',exercises:[{name:'Pull-ups or lat pulldown',sets:'4×8-12'},{name:'Chest-supported row',sets:'3×8-10'},{name:'Cable row',sets:'3×10-12'},{name:'Rear delt fly',sets:'3×12-15'},{name:'Dumbbell curls',sets:'3×10-12'},{name:'Hammer curls',sets:'2×12-15'}]},
+  Sun:{label:'Abs & Cardio',badge:'#FAC775',text:'#633806',exercises:[{name:'Hanging leg raises',sets:'3×12-15'},{name:'Cable crunches',sets:'3×12-15'},{name:'Plank',sets:'3 sets'},{name:'Incline treadmill walk or stairmaster',sets:'20-30 min'}]}
+};
+const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const jsDay = new Date().getDay();
+const todayKey = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][jsDay];
+let activeDay = todayKey;
+
+let state = { schedule:{}, workout:{}, meals:{} };
+let saveTimer = null;
+
+function setSyncStatus(s, msg) {
+  const dot = document.getElementById('syncDot');
+  dot.className = 'sync-dot' + (s==='syncing'?' syncing':s==='error'?' error':'');
+  document.getElementById('syncMsg').textContent = msg;
+}
+
+async function loadState() {
+  setSyncStatus('syncing','Loading...');
+  try {
+    const snap = await getDoc(doc(db, "planner", "planner_v1"));
+    if (snap.exists()) {
+      state = snap.data().state || { schedule:{}, workout:{}, meals:{} };
+    }
+    setSyncStatus('ok','Synced — open on any device to sync');
+  } catch(e) {
+    console.error(e);
+    setSyncStatus('error','Load failed — check Firestore rules');
+  }
+  renderAll();
+}
+
+async function saveState() {
+  setSyncStatus('syncing','Saving...');
+  try {
+    await setDoc(doc(db, "planner", "planner_v1"), {
+      state: state,
+      updatedAt: new Date().toISOString()
+    });
+    const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('ok','Saved at ' + t);
+  } catch(e) {
+    console.error(e);
+    setSyncStatus('error','Save failed — check Firestore rules');
+  }
+}
+
+function scheduleSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveState, 700); }
+
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function renderSchedule() {
+  const list = document.getElementById('sch-list');
+  const checked = state.schedule || {};
+  const done = scheduleItems.filter(it => checked[it.id]).length;
+  const pct = Math.round((done / scheduleItems.length) * 100);
+  document.getElementById('sch-progress').style.width = pct + '%';
+  list.innerHTML = scheduleItems.map(it => {
+    const isDone = !!checked[it.id];
+    return `<div class="sch-item ${isDone?'done-item':''}" style="background:${it.bg};color:${it.color};" onclick="toggleItem('schedule','${it.id}')">
+      <div class="sch-check ${isDone?'checked':''}" style="${isDone?'':'border-color:'+it.color+';opacity:.5'}">${isDone?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+      <span class="sch-time" style="color:${it.color};opacity:.65">${it.time}</span>
+      <span class="sch-label">${it.label}</span>
+      <span class="sch-dur" style="background:${it.durBg};color:${it.color}">${it.dur}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderMeals() {
+  const list = document.getElementById('meal-list');
+  const checked = state.meals || {};
+  const done = mealsData.filter(m => checked[m.id]).length;
+  const pct = Math.round((done / mealsData.length) * 100);
+  document.getElementById('meal-progress').style.width = pct + '%';
+  list.innerHTML = mealsData.map(m => {
+    const isDone = !!checked[m.id];
+    return `<div class="meal-item ${isDone?'done-item':''}" style="background:${m.bg};color:${m.color};" onclick="toggleItem('meals','${m.id}')">
+      <div class="meal-top">
+        <div class="meal-check ${isDone?'checked':''}">${isDone?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+        <span class="meal-name"><i class="ti ti-bowl" aria-hidden="true" style="font-size:14px;margin-right:5px"></i>${m.name}</span>
+        <span class="meal-kcal" style="background:${m.kcalBg};color:${m.color}">${m.kcal}</span>
+      </div>
+      <div class="meal-items">${m.items}</div>
+      <div class="meal-macro">${m.macro}</div>
+      <div class="meal-time">${m.time}</div>
+    </div>`;
+  }).join('') + `<div class="total-row">
+    <div class="total-top"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:15px"></i>Daily total<span style="margin-left:auto;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--color-background-primary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)">1,765 kcal</span></div>
+    <div class="total-macro">144.75g protein · 172g carbs · 31.5g fat</div>
+  </div>`;
+}
+
+function renderWorkout() {
+  const woChecked = (state.workout || {})[activeDay] || {};
+  const day = workoutSchedule[activeDay];
+  document.getElementById('wo-day-title').textContent = activeDay + ' — ' + day.label;
+  const badge = document.getElementById('wo-day-badge');
+  badge.textContent = day.exercises.length + ' exercises';
+  badge.style.background = day.badge;
+  badge.style.color = day.text;
+  const done = Object.values(woChecked).filter(Boolean).length;
+  const pct = Math.round((done / day.exercises.length) * 100);
+  document.getElementById('wo-progress').style.width = pct + '%';
+  const list = document.getElementById('wo-list');
+  list.innerHTML = '';
+  day.exercises.forEach((ex, i) => {
+    const isDone = !!woChecked[i];
+    const row = document.createElement('div');
+    row.className = 'ex-row';
+    row.innerHTML = `<div class="ex-check ${isDone?'done':''}">${isDone?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div><span class="ex-name ${isDone?'done':''}">${ex.name}</span><span class="ex-sets">${ex.sets}</span>`;
+    row.onclick = () => toggleWorkout(i);
+    list.appendChild(row);
+  });
+  renderWoTabs();
+}
+
+function renderWoTabs() {
+  const tabs = document.getElementById('wo-tabs');
+  tabs.innerHTML = '';
+  const todayBtn = document.createElement('button');
+  todayBtn.className = 'tab today-tab' + (activeDay===todayKey?' active':'');
+  todayBtn.textContent = 'Today';
+  todayBtn.onclick = () => setWoDay(todayKey);
+  tabs.appendChild(todayBtn);
+  days.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (activeDay===d?' active':'');
+    btn.textContent = d;
+    btn.onclick = () => setWoDay(d);
+    tabs.appendChild(btn);
+  });
+}
+
+function setWoDay(d) { activeDay = d; renderWorkout(); }
+
+function toggleItem(section, id) {
+  if (!state[section]) state[section] = {};
+  state[section][id] = !state[section][id];
+  if (section === 'schedule') renderSchedule();
+  else if (section === 'meals') renderMeals();
+  scheduleSave();
+}
+
+function toggleWorkout(i) {
+  if (!state.workout) state.workout = {};
+  if (!state.workout[activeDay]) state.workout[activeDay] = {};
+  state.workout[activeDay][i] = !state.workout[activeDay][i];
+  renderWorkout();
+  scheduleSave();
+}
+
+function resetSection(section) {
+  if (section === 'workout') {
+    if (!state.workout) state.workout = {};
+    state.workout[activeDay] = {};
+    renderWorkout();
+  } else {
+    state[section] = {};
+    if (section === 'schedule') renderSchedule();
+    else renderMeals();
+  }
+  scheduleSave();
+}
+
+function renderAll() { renderSchedule(); renderMeals(); renderWorkout(); }
+
+window.showPanel = showPanel;
+window.resetSection = resetSection;
+window.toggleItem = toggleItem;
+window.setWoDay = setWoDay;
+
+loadState();
+</script>
+
+</body>
+</html>
